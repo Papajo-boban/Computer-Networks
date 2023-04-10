@@ -1,0 +1,23 @@
+import socket
+
+#specifying internet protocol (IPV4- AF_INET ) & communication protocol (TCP - SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+#connect the socket to the server located at a given IP and Port
+host_port= ("143.47.184.219", 5378)
+sock.connect(host_port)
+
+
+string_bytes = "HELLO-FROM Tomáš\n".encode("utf-8")
+bytes_len = len(string_bytes)
+num_bytes_to_send = bytes_len
+
+print("code is running")
+while num_bytes_to_send > 0:
+# Sometimes, the operating system cannot send everything immediately.
+# For example, the sending buffer may be full.
+# send returns the number of bytes that were sent.
+    num_bytes_to_send -= sock.send(string_bytes[bytes_len-num_bytes_to_send:])
+    # sendall calls send repeatedly until all bytes are sent.
+    sock.send(string_bytes)
+print("code is still running")
